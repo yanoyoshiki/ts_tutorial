@@ -33,12 +33,28 @@ function App() {
   const handleEdit = (id: number, inputValue: string) => {
     const NewTodos = todos.map((todo) => {
       if (todo.id == id){
-        todo.inputValue = inputValue
+        todo.inputValue = inputValue;
       };
       return todo;
     });
     setTodos(NewTodos);
   };
+
+  const handleChecked = (id: number, checked: boolean) => {
+    const NewTodos = todos.map((todo) => {
+      if (todo.id == id){
+        todo.checked = !checked;
+      };
+      return todo;
+    });
+    setTodos(NewTodos);
+  };
+
+  const handeldelete = (id: number) => {
+    const NewTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(NewTodos);
+  };
+
   
   return (
     <div className="App">
@@ -56,7 +72,13 @@ function App() {
               onChange={(e) => handleEdit(todo.id, e.target.value)} 
               className='inputText'
               value={todo.inputValue}
+              disabled = {todo.checked}
               />
+              <input 
+              type="checkbox" 
+              onChange={(e) => handleChecked(todo.id,todo.checked)}
+              />
+              <button onClick = {() => handeldelete(todo.id)}>delete</button>
             </li>
           ))}
         </ul>
